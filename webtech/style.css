@@ -1,0 +1,11 @@
+* {
+  background-color: aquamarine;
+}
+
+.tf {
+  background-color: black;
+  color: white;
+  height: 20px;
+  width: 250px;
+  border-radius: 25px;
+}

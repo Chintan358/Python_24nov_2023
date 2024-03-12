@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        function change() {
+
+            var e1 = document.getElementsByTagName("h1")[0]
+            e1.style.backgroundColor = "red"
+            e1.style.color = "white"
+        }
+
+        function unchange() {
+
+            var e1 = document.getElementsByTagName("h1")[0]
+            e1.style.backgroundColor = "green"
+            e1.style.color = "yellow"
+        }
+
+        function btnchange() {
+            var b1 = document.getElementById("btn")
+            b1.style.width = "150px"
+            b1.style.height = "30px"
+            b1.style.backgroundColor = "black"
+            b1.style.color = "white"
+        }
+
+        function add() {
+            var n1 = document.getElementById("n1").value
+            var n2 = document.getElementById("n2").value
+            var r = Number(n1) + Number(n2)
+            document.getElementById("result").innerHTML = r
+        }
+
+
+        function sub() {
+            var n1 = document.getElementById("n1").value
+            var n2 = document.getElementById("n2").value
+            var r = Number(n1) - Number(n2)
+            document.getElementById("result").innerHTML = r
+        }
+
+
+        function mul() {
+            var n1 = document.getElementById("n1").value
+            var n2 = document.getElementById("n2").value
+            var r = Number(n1) * Number(n2)
+            document.getElementById("result").innerHTML = r
+        }
+
+
+        function div() {
+            var n1 = document.getElementById("n1").value
+            var n2 = document.getElementById("n2").value
+            var r = Number(n1) / Number(n2)
+            document.getElementById("result").innerHTML = r
+        }
+
+        function fchange() {
+            var n1 = document.getElementById("n1")
+            n1.style.background = "blue"
+            n1.style.color = "red"
+        }
+
+        function funchange() {
+            var n1 = document.getElementById("n1")
+            n1.style.background = "green"
+            n1.style.color = "white"
+        }
+
+    </script>
+
+
+
+</head>
+
+<body>
+    <!-- <h1 onmouseover="change()" onmouseout="unchange()">Hello Python</h1>
+    <h1>Hello Tops</h1>
+
+    <button id="btn" ondblclick="btnchange()">Click here</button> -->
+
+    <input type="text" id="n1" onclick="fchange()" onblur="funchange()">
+    <input type="text" id="n2" onclick="fchange()" onblur="funchange()">
+    <span id="result"></span>
+
+    <button onmouseover="add()">Add</button>
+    <button onmouseover="sub()">Sub</button>
+    <button onmouseover="mul()">Mul</button>
+    <button onmouseover="div()">Div</button>
+
+</body>
+
+</html>
