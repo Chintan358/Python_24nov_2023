@@ -9,7 +9,11 @@ def index(request):
     return render(request,'index.html')
 
 def home(request):
-     return render(request,'home.html')
+     # conext = {"data":"Hello python"}
+
+     std = [{"name":"Maulik","email":"maulik@gmail.com", "phone":"9685748596"},{"name":"Priyansh","email":"priyansh@gmail.com", "phone":"9685748596"},{"name":"Akshay","email":"akshay@gmail.com", "phone":"9685748566"}]
+     
+     return render(request,'home.html',{'stddata':std})
 
 def about(request):
      return render(request,'about.html')
