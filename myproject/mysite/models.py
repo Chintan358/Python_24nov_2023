@@ -7,6 +7,8 @@ class Student(models.Model):
     email = models.CharField(max_length=50)
     password=models.CharField(max_length=50)
 
+  
+
 class Product(models.Model):
     productname=models.CharField(max_length=10)
     price=models.IntegerField()

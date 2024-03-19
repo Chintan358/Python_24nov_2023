@@ -1,12 +1,19 @@
 from django.shortcuts import render,HttpResponse
-
+from .models import Student
+from django.contrib import messages
 # Create your views here.
 def index(request):
-    # return HttpResponse("""<h1>Index</h1>
-                        
-    #                     <a href='about'>python</a>
-    #                     """)
-    return render(request,'index.html')
+     
+     if request.method=='POST':
+          data = request.POST
+          uname = data.get('uname')
+          email = data.get('email')
+          password=data.get('password')
+
+          Student.objects.create(name=uname,email=email,password=password)
+
+     messages.success(request,"Registration sucessfully done !!!")
+     return render(request,'index.html')
 
 def home(request):
      # conext = {"data":"Hello python"}
