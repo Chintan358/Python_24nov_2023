@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
 from .models import Student
 from django.contrib import messages
 # Create your views here.
@@ -11,9 +11,14 @@ def index(request):
           password=data.get('password')
 
           Student.objects.create(name=uname,email=email,password=password)
+          messages.success(request,"Registration sucessfully done !!!")
+          return redirect('index')
 
-     messages.success(request,"Registration sucessfully done !!!")
      return render(request,'index.html')
+
+
+
+
 
 def home(request):
      # conext = {"data":"Hello python"}

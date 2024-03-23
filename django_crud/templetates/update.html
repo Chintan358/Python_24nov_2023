@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1 align="center">Update Form</h1>
+    <form action="" method="post">
+        {%csrf_token%}
+        <table border="1" align="center" cellspacing="10">
+            <input type="hidden" value="{{edata.id}}" name="id">
+            <tr>
+                <td>Username</td>
+                <td> <input type="text" name="uname" placeholder="Enter Username" value="{{edata.username}}"></td>
+            </tr>
+
+            <tr>
+                <td>Email</td>
+                <td> <input type="text" name="email" placeholder="Enter Email" value="{{edata.email}}"></td>
+            </tr>
+
+            <tr>
+                <td>Password</td>
+                <td> <input type="password" name="password" placeholder="Enter password" value="{{edata.password}}">
+                </td>
+            </tr>
+
+            <tr>
+                <td>Gender</td>
+                <td> <input type="radio" name="gender" value="male" checked>Male
+                    <input type="radio" name="gender" value="female">female
+                </td>
+            </tr>
+
+            <tr>
+                <td>Languages</td>
+                <td>
+                    <input type="checkbox" name="lang" value="gujarati">gujarati
+                    <input type="checkbox" name="lang" value="hindi">Hindi
+                    <input type="checkbox" name="lang" value="English">English
+
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Country</td>
+                <td>
+                    <select name="country" id="country">
+                        <option value="india">India</option>
+                        <option value="usa">USA</option>
+                        <option value="uk">UK</option>
+                        <option value="canada">Canada</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td><input type="submit"></td>
+            </tr>
+
+        </table>
+
+
+    </form>
+
+
+</body>
+
+</html>
