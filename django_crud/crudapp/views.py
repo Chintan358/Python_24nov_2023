@@ -1,8 +1,12 @@
 from django.shortcuts import render,redirect
 from .models import*
-
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
 # Create your views here.
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url="/")
 def index(request):
 
         if request.method=='POST':
@@ -23,6 +27,7 @@ def index(request):
         alldata = Emp.objects.all
         return render(request,'index.html',{"empdata":alldata})
 
+@login_required(login_url="/")
 def delete(request,id):
     edata =  Emp.objects.get(id=id)
     edata.delete()
@@ -48,3 +53,49 @@ def edit(request,id):
             return redirect('/')
 
     return render(request,'update.html',{"edata":edata})
+
+def loginpage(request):
+    if request.method=='POST':
+        data = request.POST
+        uname = data.get("uname")
+        password = data.get("password")
+
+        if not User.objects.filter(username=uname).exists():
+            messages.info(request,"Invalid credentials")
+            return redirect("/")
+        
+        user = authenticate(username=uname,password=password)
+        if user is None:
+            messages.info(request,"Invalid credentials")
+            return redirect("/")
+        else:
+            login(request,user)
+            return redirect("index")
+        
+    return render(request,"login.html")
+
+def regpage(request):
+     
+     if request.method=='POST':
+          data = request.POST
+          fname = data.get("fname")
+          lname = data.get("lname")
+          uname = data.get("uname")
+          password = data.get("password")
+
+          if User.objects.filter(username=uname).exists():
+            messages.info(request,"Username exists !!!")
+            return redirect("reg")
+
+          else:
+            user =  User.objects.create(first_name=fname,last_name=lname,username=uname)
+            user.set_password(password)
+            user.save()
+            messages.info(request,"Registration successfully !!!")
+            return redirect("reg")
+
+     return render(request,"registration.html")
+
+def logoutpage(request):
+    logout(request)
+    return render(request,"login.html")
