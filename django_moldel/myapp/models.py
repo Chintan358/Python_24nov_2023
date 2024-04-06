@@ -12,3 +12,4 @@ class Employee(models.Model):
     name = models.CharField(max_length=20)
     email = models.CharField(max_length=20)
     salary = models.IntegerField()
+    age = models.IntegerField(default=0)

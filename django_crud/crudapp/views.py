@@ -17,12 +17,12 @@ def index(request):
             gender=data.get('gender')
             language=data.getlist('lang')
             country=data.get('country')
-            
+            image = request.FILES.get('img')
             lng=""
             for i in language:
                 lng = lng+i+","
             
-            Emp.objects.create(username=uname,email=email,password=password,gender=gender,language=lng,country=country)
+            Emp.objects.create(username=uname,email=email,password=password,gender=gender,language=lng,country=country,image=image)
 
         alldata = Emp.objects.all
         return render(request,'index.html',{"empdata":alldata})
@@ -31,7 +31,7 @@ def index(request):
 def delete(request,id):
     edata =  Emp.objects.get(id=id)
     edata.delete()
-    return redirect('/')
+    return redirect('index')
 
 def edit(request,id):
     edata =  Emp.objects.get(id=id)
@@ -43,6 +43,7 @@ def edit(request,id):
             edata.gender=data.get('gender')
             language=data.getlist('lang')
             edata.country=data.get('country')
+
             
             lng=""
             for i in language:
@@ -50,7 +51,7 @@ def edit(request,id):
 
             edata.language=lng
             edata.save()
-            return redirect('/')
+            return redirect('index')
 
     return render(request,'update.html',{"edata":edata})
 

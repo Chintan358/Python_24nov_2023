@@ -13,3 +13,9 @@ def getData(n=10):
      salary = random.randint(10000,99999)
 
      Employee.objects.create(Department=dept, name=name,email=email,salary=salary)
+
+def addage():
+   emps = Employee.objects.all()
+   for i in range(0,len(emps)):
+      emps[i].age = random.randint(30,60)
+      emps[i].save()

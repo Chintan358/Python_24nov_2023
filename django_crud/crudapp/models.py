@@ -9,4 +9,5 @@ class Emp(models.Model):
     gender=models.CharField(max_length=10)
     language=models.CharField(max_length=50)
     country=models.CharField(max_length=10)
+    image = models.ImageField(upload_to="my_image",default="test")
 

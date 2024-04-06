@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h1 align="center">Update Form</h1>
+
+    <form action="" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="id" value="{{sdata.id}}" />
+      <table align="center" border="1">
+        <tr>
+          <td><label for="uname">Username</label></td>
+          <td>
+            <input
+              type="text"
+              name="uname"
+              id="uname"
+              value="{{sdata.uname}}"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="email">Email</label></td>
+          <td>
+            <input
+              type="text"
+              name="email"
+              id="email"
+              value="{{sdata.email}}"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="password">Password</label></td>
+          <td>
+            <input
+              type="text"
+              name="password"
+              id="password"
+              value="{{sdata.password}}"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td><input type="submit" /></td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>
