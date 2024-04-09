@@ -1,11 +1,12 @@
 from django.shortcuts import render,redirect
 from .models import*
 from django.contrib.auth.models import User
+from userapp.models import CustomeUser
 from django.contrib.auth import authenticate,login,logout
 # Create your views here.
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+import os
 @login_required(login_url="/")
 def index(request):
 
@@ -31,6 +32,7 @@ def index(request):
 def delete(request,id):
     edata =  Emp.objects.get(id=id)
     edata.delete()
+    os.remove(edata.image.path)
     return redirect('index')
 
 def edit(request,id):
@@ -44,6 +46,10 @@ def edit(request,id):
             language=data.getlist('lang')
             edata.country=data.get('country')
 
+            if request.FILES.get("img") is not None:
+                os.remove(edata.image.path)
+                edata.image = request.FILES.get("img")
+               
             
             lng=""
             for i in language:
@@ -58,14 +64,14 @@ def edit(request,id):
 def loginpage(request):
     if request.method=='POST':
         data = request.POST
-        uname = data.get("uname")
+        phone = data.get("phone")
         password = data.get("password")
 
-        if not User.objects.filter(username=uname).exists():
+        if not CustomeUser.objects.filter(phone_number=phone).exists():
             messages.info(request,"Invalid credentials")
             return redirect("/")
         
-        user = authenticate(username=uname,password=password)
+        user = authenticate(phone_number=phone,password=password)
         if user is None:
             messages.info(request,"Invalid credentials")
             return redirect("/")
@@ -81,15 +87,15 @@ def regpage(request):
           data = request.POST
           fname = data.get("fname")
           lname = data.get("lname")
-          uname = data.get("uname")
+          phone = data.get("phone")
           password = data.get("password")
 
-          if User.objects.filter(username=uname).exists():
-            messages.info(request,"Username exists !!!")
+          if CustomeUser.objects.filter(phone_number=phone).exists():
+            messages.info(request,"Phone exists !!!")
             return redirect("reg")
 
           else:
-            user =  User.objects.create(first_name=fname,last_name=lname,username=uname)
+            user =  CustomeUser.objects.create(first_name=fname,last_name=lname,phone_number=phone)
             user.set_password(password)
             user.save()
             messages.info(request,"Registration successfully !!!")
