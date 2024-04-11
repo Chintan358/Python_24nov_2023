@@ -20,5 +20,8 @@ from myapp import views
 
 urlpatterns = [
  
-    path('',views.index,name="index")
+    path('viewdata/',views.viewdata,name="viewdata"),
+    path('adddata/',views.adddata,name="adddata"),
+     path('updatedata/<id>',views.updatedata,name="updatedata"),
+      path('deletedata/<id>',views.deletedata,name="deletedata")
 ]
