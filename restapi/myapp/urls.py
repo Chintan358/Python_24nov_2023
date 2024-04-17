@@ -22,6 +22,7 @@ urlpatterns = [
  
     path('viewdata/',views.viewdata,name="viewdata"),
     path('adddata/',views.adddata,name="adddata"),
-     path('updatedata/<id>',views.updatedata,name="updatedata"),
-      path('deletedata/<id>',views.deletedata,name="deletedata")
+    path('updatedata/<id>',views.updatedata,name="updatedata"),
+    path('deletedata/<id>',views.deletedata,name="deletedata"),
+    path('books/',views.BookApi.as_view(),name="books")
 ]

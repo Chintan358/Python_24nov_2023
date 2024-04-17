@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from .models import *
 from .serializer import *
+
 # Create your views here.
 
 @api_view(['get'])
@@ -14,7 +16,7 @@ def viewdata(request):
 @api_view(['post'])
 def adddata(request):
 
-    print(request.data)
+    
     ser_data =  UserSerializer(data=request.data)
     if not ser_data.is_valid():
         return Response({"message":"something went wrong","errors":ser_data.errors})
@@ -43,3 +45,26 @@ def deletedata(request,id):
     except Exception as e:
         print(e)
         return Response({"Error":"Id not found"})
+    
+
+class BookApi(APIView):
+    def get(self,request):
+        booksdata = Book.objects.all()
+        bookser = BookSerializer(booksdata,many=True)
+        return Response({"data":bookser.data})
+    
+    def post(self,request):
+
+        ser_data =  BookSerializer(data=request.data)
+       
+        if not ser_data.is_valid():
+          return Response({"message":"something went wrong","errors":ser_data.errors})
+        ser_data.save()
+        return Response({"userdata":ser_data.data,"message":"Book inserted"})
+
+
+    def put(self,request):
+        return Response({"msg":"put calling"})
+    def delete(self,request):
+        return Response({"msg":"delete calling"})
+    
