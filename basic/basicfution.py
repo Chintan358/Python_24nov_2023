@@ -20,5 +20,5 @@
 fname,lname="maulik monapara".split(" ")
 
 
-# print("my fname is {1} and lname is {0}".format(fname,lname))
-print(f"my fname is {fname} and my lname is {lname}")
+# print("my fname is {0} and lname is {1}".format(fname,lname))
+# print(f"my fname is {fname} and my lname is {lname}")

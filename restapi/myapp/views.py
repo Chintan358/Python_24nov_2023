@@ -64,7 +64,24 @@ class BookApi(APIView):
 
 
     def put(self,request):
-        return Response({"msg":"put calling"})
+        try:
+
+            book_data = Book.objects.get(id=request.data['id'])
+            ser_data = BookSerializer(book_data,request.data)
+            if not ser_data.is_valid():
+                return Response({"message":"something went wrong","errors":ser_data.errors})
+            ser_data.save()
+            return Response({"bookdata":ser_data.data,"message":"Book Updated"})
+        except Exception as e:
+            print(e)
+            return Response({"Error":"Id not found"})
+        
     def delete(self,request):
-        return Response({"msg":"delete calling"})
-    
+        try:
+            book_data = Book.objects.get(id=request.data['id'])
+            book_data.delete()
+            return Response({"message":"data deleted"})
+        except Exception as e:
+            
+            return Response({"Error":"Id not found"})
+        
