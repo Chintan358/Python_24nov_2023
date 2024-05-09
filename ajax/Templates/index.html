@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+
+        $(document).ready(function () {
+            loadData()
+        })
+
+        const loadData = () => {
+
+            $.get("display", {}, function (rt) {
+                var row = "";
+                for (var i = 0; i < rt.data.length; i++) {
+
+
+                    row = row + "<tr><td>" + rt.data[i].id + "</td><td>" + rt.data[i].username + "</td><td>" + rt.data[i].email + "</td><td>" + rt.data[i].phone + "</td><td>" + rt.data[i].age + "</td><td><button class='btn btn-primary'>Edit</button></td><td><button class='btn btn-danger'>Delete</button></td></tr>"
+
+                }
+
+                $("#tdata").html(row)
+            })
+
+        }
+
+        const adddata = () => {
+            var uname = $("#uname").val()
+            var email = $("#email").val()
+            var phone = $("#phone").val()
+            var age = $("#age").val()
+            var csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value
+
+            $.post('reg', { uname, email, phone, age, csrfmiddlewaretoken }, function (rt) {
+                alert(rt)
+
+                $("#uname").val("")
+                $("#email").val("")
+                $("#phone").val("")
+                $("#age").val("")
+                loadData()
+            })
+
+        }
+
+
+
+    </script>
+
+
+</head>
+
+<body>
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h1>User Registration</h1>
+                {%csrf_token%}
+                <div class="form-group">
+                    <label for="uname">Username</label>
+                    <input type="text" name="uname" id="uname" class="form-control">
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" name="phone" id="phone" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="text" name="age" id="age" class="form-control">
+                </div>
+
+                <button class="btn btn-success" onclick="adddata()">Submit</button>
+            </div>
+            <div class="col-md-8">
+                <h1>User Details</h1>
+                <table class="table">
+                    <tr>
+                        <th>Id</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Age</th>
+                    </tr>
+
+                    <tbody id="tdata">
+
+                    </tbody>
+
+
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
