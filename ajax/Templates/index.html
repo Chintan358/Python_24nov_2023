@@ -22,6 +22,7 @@
 
         $(document).ready(function () {
             loadData()
+            $("#up_btn").hide()
         })
 
         const loadData = () => {
@@ -31,7 +32,7 @@
                 for (var i = 0; i < rt.data.length; i++) {
 
 
-                    row = row + "<tr><td>" + rt.data[i].id + "</td><td>" + rt.data[i].username + "</td><td>" + rt.data[i].email + "</td><td>" + rt.data[i].phone + "</td><td>" + rt.data[i].age + "</td><td><button class='btn btn-primary'>Edit</button></td><td><button class='btn btn-danger'>Delete</button></td></tr>"
+                    row = row + "<tr><td>" + rt.data[i].id + "</td><td>" + rt.data[i].username + "</td><td>" + rt.data[i].email + "</td><td>" + rt.data[i].phone + "</td><td>" + rt.data[i].age + "</td><td><button class='btn btn-danger' onclick='deletedata(" + rt.data[i].id + ")'>Delete</button></td><td><button class='btn btn-primary'onclick='editdata(" + rt.data[i].id + ")' >Edit</button></td></tr>"
 
                 }
 
@@ -59,7 +60,64 @@
 
         }
 
+        const deletedata = (id) => {
 
+            $.get("delete", { id }, function (rt) {
+                alert(rt)
+                loadData();
+            });
+
+        }
+
+        const editdata = (id) => {
+            $.get("edit", { id }, function (rt) {
+
+                $("#id").val(rt.data[0].id)
+                $("#uname").val(rt.data[0].username)
+                $("#email").val(rt.data[0].email)
+                $("#phone").val(rt.data[0].phone)
+                $("#age").val(rt.data[0].age)
+
+                $("#up_btn").show()
+                $("#sm_btn").hide()
+            });
+        }
+
+
+        const updatedata = () => {
+
+            var id = $("#id").val()
+            var uname = $("#uname").val()
+            var email = $("#email").val()
+            var phone = $("#phone").val()
+            var age = $("#age").val()
+            var csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value
+
+            $.post('update', { id, uname, email, phone, age, csrfmiddlewaretoken }, function (rt) {
+                alert(rt)
+
+                $("#uname").val("")
+                $("#email").val("")
+                $("#phone").val("")
+                $("#age").val("")
+                loadData()
+            })
+
+        }
+
+        const search = (dt) => {
+            $.get("search", { dt }, function (rt) {
+                var row = "";
+                for (var i = 0; i < rt.data.length; i++) {
+
+
+                    row = row + "<tr><td>" + rt.data[i].id + "</td><td>" + rt.data[i].username + "</td><td>" + rt.data[i].email + "</td><td>" + rt.data[i].phone + "</td><td>" + rt.data[i].age + "</td><td><button class='btn btn-danger' onclick='deletedata(" + rt.data[i].id + ")'>Delete</button></td><td><button class='btn btn-primary'onclick='editdata(" + rt.data[i].id + ")' >Edit</button></td></tr>"
+
+                }
+
+                $("#tdata").html(row)
+            })
+        }
 
     </script>
 
@@ -75,6 +133,8 @@
             <div class="col-md-4">
                 <h1>User Registration</h1>
                 {%csrf_token%}
+
+                <input type="hidden" id="id">
                 <div class="form-group">
                     <label for="uname">Username</label>
                     <input type="text" name="uname" id="uname" class="form-control">
@@ -97,10 +157,16 @@
                     <input type="text" name="age" id="age" class="form-control">
                 </div>
 
-                <button class="btn btn-success" onclick="adddata()">Submit</button>
+                <button class="btn btn-success" id="sm_btn" onclick="adddata()">Submit</button>
+                <button class="btn btn-success" id="up_btn" onclick="updatedata()">Update</button>
             </div>
             <div class="col-md-8">
                 <h1>User Details</h1>
+                <div class="form-group">
+                    <input type="text" id="search" name="search" class="form-control" placeholder="Search"
+                        onkeyup="search(value)">
+                </div>
+
                 <table class="table">
                     <tr>
                         <th>Id</th>
