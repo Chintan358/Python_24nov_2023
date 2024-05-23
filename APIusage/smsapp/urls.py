@@ -21,5 +21,6 @@ from .views import *
 urlpatterns = [
     
     path('sms',sms,name='sms'),
-    path('email',email,name='email')
+    path('email',email,name='email'),
+    path("email_attach",email_attach,name="email_attach")
 ]

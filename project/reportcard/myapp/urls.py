@@ -19,5 +19,6 @@ from django.urls import path
 from .views import *
 urlpatterns = [
     path('',index,name="index"),
-    path('marks/<id>',marks,name="marks")
+    path('marks/<id>',marks,name="marks"),
+    path('mail/<id>',mail,name="mail")
 ]
